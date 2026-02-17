@@ -297,6 +297,78 @@
       font-style: italic;
     }
 
+    /* ── LOVE LETTER ── */
+    .love-letter {
+      display: none;
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 10px 50px rgba(194,24,91,0.2);
+      border: 3px solid #ffb3c6;
+      position: relative;
+      animation: letterAppear 1s ease;
+    }
+
+    @keyframes letterAppear {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .love-letter::before {
+      content: '💌';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 60px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0px); }
+      50%       { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    .letter-to {
+      color: #c2185b;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .letter-text {
+      color: #3a2a28;
+      font-size: 17px;
+      line-height: 1.8;
+      text-align: left;
+      font-family: Georgia, serif;
+      min-height: 40px;
+    }
+
+    .letter-text::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+      color: #c2185b;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .letter-from {
+      margin-top: 30px;
+      text-align: right;
+      color: #c2185b;
+      font-size: 18px;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+
     .petal {
       position: fixed;
       top: -30px;
@@ -382,6 +454,13 @@
     <p>You just made me the happiest person alive. ❤️❤️❤️🥰🥰🌹</p>
   </div>
 
+  <!-- LOVE LETTER -->
+  <div class="love-letter" id="loveLetter">
+    <div class="letter-to">To: my cutuu sabeen!! 💕</div>
+    <div class="letter-text" id="letterText"></div>
+    <div class="letter-from">~ Your paru, forever 💗</div>
+  </div>
+
   <div class="floral-bottom">🌸 🌺 🌼 💮 🌼 🌺 🌸</div>
 
   <script>
@@ -427,7 +506,6 @@
     const dotsContainer = document.getElementById('dots');
     const caption = document.getElementById('slideCaption');
 
-    // build dots
     slides.forEach((_, i) => {
       const dot = document.createElement('div');
       dot.classList.add('dot');
@@ -449,7 +527,6 @@
       goToSlide(current + dir);
     }
 
-    // auto advance every 4 seconds
     setInterval(() => changeSlide(1), 4000);
 
     // --- NO BUTTON RUNS AWAY ---
@@ -467,11 +544,40 @@
     const yesBtn = document.getElementById('yesBtn');
     yesBtn.addEventListener('click', function() {
       document.getElementById('message').style.display = 'block';
-      document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
+      
+      // Show and type the love letter
+      setTimeout(() => {
+        const letterDiv = document.getElementById('loveLetter');
+        letterDiv.style.display = 'block';
+        letterDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        typeLetter();
+      }, 1500);
+
       for (let i = 0; i < 150; i++) {
         setTimeout(makeConfetti, i * 20);
       }
     });
+
+    // --- TYPING LOVE LETTER ---
+    const letterContent = "Happy Valentine's day! I know that I am late and I feel guilty especially after what you did for me☹️ I can't write a letter half as good as the ones you wrote but I'll try my best with this stupid idea of mine 😭 I couldn't decide on what to do after seeing your letter as i am not as creative and talented as you are so I landed on this 😭. I hope you like it. I genuinely can't describe what you mean to me. You are my everything, the greatest thing to ever happen to me ☹️💗 You are the most amazing, cutest, prettiest, genius, gorgeous, smart and simply the best woman ever😽💗💗💗You are just perfect!!! I have never been excited to meet someone the way I'm excited to meet you daily. You genuinely mean the world to me 💗 You deserve all the best things and I hope to be a source of love, happiness and comfort for you. I will never let you go now as we are already married hehe 😋 I LOVE YOU SO SO MUCH MY PARU. INSHALLAH WE WILL BE TOGETHER FOREVER MUAH MUAH 😽💗💗💗💗💗💗💗💗💗";
+
+    function typeLetter() {
+      const textElement = document.getElementById('letterText');
+      let i = 0;
+      
+      function type() {
+        if (i < letterContent.length) {
+          textElement.textContent += letterContent.charAt(i);
+          i++;
+          setTimeout(type, 30); // 30ms per character for smooth typing
+        } else {
+          // Remove blinking cursor when done
+          textElement.style.setProperty('--cursor', 'none');
+        }
+      }
+      
+      type();
+    }
 
     // --- CONFETTI ---
     function makeConfetti() {
