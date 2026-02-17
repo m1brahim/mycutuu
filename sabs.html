@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You 💕</title>
+
+  <style>
+
+    /* ── BACKGROUND ── */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      text-align: center;
+      font-family: Georgia, serif;
+      background-color: #ffe4ec;
+      background-image:
+        radial-gradient(circle at 10% 20%, #ffc2d4 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, #ffb3c6 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, #fff0f3 0%, transparent 60%);
+      overflow-x: hidden;
+    }
+
+    /* ── FLORAL CORNERS ── */
+    body::before {
+      content: '🌸🌺🌼🌸';
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-size: 28px;
+      letter-spacing: 4px;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '🌸🌺🌼🌸';
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 28px;
+      letter-spacing: 4px;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* ── FLORAL BORDER TOP ── */
+    .floral-top {
+      font-size: 24px;
+      letter-spacing: 6px;
+      padding: 12px 0;
+      background: rgba(255,255,255,0.4);
+      border-bottom: 2px dashed #ffb3c6;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .floral-bottom {
+      font-size: 24px;
+      letter-spacing: 6px;
+      padding: 12px 0;
+      background: rgba(255,255,255,0.4);
+      border-top: 2px dashed #ffb3c6;
+      margin-top: 40px;
+    }
+
+    /* ── KITTEN TOP ── */
+    .kitten-top {
+      font-size: 80px;
+      margin-top: 30px;
+      display: block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-15px); }
+    }
+
+    /* ── TITLE ── */
+    h1 {
+      color: #c2185b;
+      font-size: clamp(28px, 5vw, 52px);
+      margin: 10px 20px;
+      text-shadow: 2px 2px 8px rgba(255,100,150,0.3);
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.05); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.03); }
+    }
+
+    .subtitle {
+      color: #e91e8c;
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-style: italic;
+      opacity: 0.85;
+    }
+
+    /* ── IMAGES ROW ── */
+    .images-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 20px auto;
+      max-width: 700px;
+      padding: 0 20px;
+    }
+
+    .images-row span {
+      font-size: 60px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 20px;
+      padding: 12px 18px;
+      box-shadow: 0 4px 15px rgba(255,100,150,0.2);
+      animation: wiggle 3s ease-in-out infinite;
+      border: 2px solid #ffb3c6;
+    }
+
+    .images-row span:nth-child(2) { animation-delay: 0.3s; }
+    .images-row span:nth-child(3) { animation-delay: 0.6s; }
+    .images-row span:nth-child(4) { animation-delay: 0.9s; }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg) scale(1); }
+      50%       { transform: rotate(3deg)  scale(1.05); }
+    }
+
+    /* ── BUTTONS ── */
+    .buttons {
+      margin: 30px 0;
+    }
+
+    #yesBtn {
+      background: linear-gradient(135deg, #ff80ab, #f48fb1);
+      color: white;
+      font-size: 22px;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 50px;
+      margin: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255,100,150,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 6px 20px rgba(255,100,150,0.4); }
+      50%       { box-shadow: 0 6px 35px rgba(255,100,150,0.8); }
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(255,100,150,0.6);
+    }
+
+    #noBtn {
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+      color: #c2185b;
+      font-size: 22px;
+      padding: 16px 40px;
+      border: 2px solid #f48fb1;
+      border-radius: 50px;
+      margin: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    /* ── MESSAGE AFTER YES ── */
+    #message {
+      display: none;
+      margin-top: 30px;
+      padding: 30px 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .kitten-yes {
+      font-size: 90px;
+      display: block;
+      animation: spin 0.6s ease, bounce 2s ease-in-out 0.6s infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg) scale(0); }
+      to   { transform: rotate(360deg) scale(1); }
+    }
+
+    #message h2 {
+      color: #c2185b;
+      font-size: clamp(26px, 4vw, 44px);
+      margin: 10px 0;
+      text-shadow: 1px 1px 6px rgba(255,100,150,0.4);
+    }
+
+    #message p {
+      color: #e91e8c;
+      font-size: 20px;
+      font-style: italic;
+    }
+
+    /* ── FALLING PETALS ── */
+    .petal {
+      position: fixed;
+      top: -30px;
+      font-size: 20px;
+      pointer-events: none;
+      animation: fall linear forwards;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      0%   { top: -30px; opacity: 1;  }
+      100% { top: 110vh;  opacity: 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- FLORAL TOP BAR -->
+  <div class="floral-top">🌸 🌺 🌼 💮 🌼 🌺 🌸</div>
+
+  <!-- KITTEN AT TOP -->
+  <span class="kitten-top">🐱</span>
+
+  <!-- TITLE -->
+  <h1>Will you be my Valentine? 💕</h1>
+  <p class="subtitle">~ you mean everything to me ~</p>
+
+  <!-- DECORATIVE IMAGE ROW -->
+  <div class="images-row">
+    <span>🌹</span>
+    <span>💝</span>
+    <span>🍫</span>
+    <span>💌</span>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="buttons">
+    <button id="yesBtn">Yes of course! 💕</button>
+    <button id="noBtn">Maybe... 👀</button>
+  </div>
+
+  <!-- MESSAGE SHOWN AFTER YES -->
+  <div id="message">
+    <span class="kitten-yes">🐱</span>
+    <h2>Yayyyy!! 🎉💕</h2>
+    <p>You just made me the happiest person alive 🥹🌹</p>
+  </div>
+
+  <!-- FLORAL BOTTOM BAR -->
+  <div class="floral-bottom">🌸 🌺 🌼 💮 🌼 🌺 🌸</div>
+
+  <script>
+
+    // --- MAYBE BUTTON RUNS AWAY ---
+    const noBtn = document.getElementById('noBtn');
+    noBtn.addEventListener('mouseover', function() {
+      const x = Math.random() * (window.innerWidth  - 150);
+      const y = Math.random() * (window.innerHeight - 80);
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top  = y + 'px';
+      noBtn.style.zIndex = 999;
+    });
+
+    // --- YES BUTTON ---
+    const yesBtn = document.getElementById('yesBtn');
+    yesBtn.addEventListener('click', function() {
+      document.getElementById('message').style.display = 'block';
+      document.getElementById('message').scrollIntoView({ behavior: 'smooth' });
+      for (let i = 0; i < 150; i++) {
+        setTimeout(makeConfetti, i * 20);
+      }
+    });
+
+    // --- CONFETTI ---
+    function makeConfetti() {
+      const c = document.createElement('div');
+      c.style.cssText = `
+        position: fixed;
+        width: ${Math.random() * 12 + 6}px;
+        height: ${Math.random() * 12 + 6}px;
+        border-radius: 50%;
+        background: ${randomColor()};
+        left: ${Math.random() * 100}vw;
+        top: -15px;
+        z-index: 9999;
+        pointer-events: none;
+      `;
+      document.body.appendChild(c);
+      let pos = -15, speed = Math.random() * 6 + 3, drift = Math.random() * 6 - 3, left = parseFloat(c.style.left);
+      const fall = setInterval(() => {
+        pos  += speed;
+        left += drift;
+        c.style.top  = pos + 'px';
+        c.style.left = left + 'vw';
+        if (pos > window.innerHeight) { clearInterval(fall); c.remove(); }
+      }, 16);
+    }
+
+    function randomColor() {
+      return ['#ff6b9d','#ff9ff3','#ff4757','#ffd32a','#ff6348','#ffffff','#c56cf0','#ffb8b8'][Math.floor(Math.random() * 8)];
+    }
+
+    // --- FALLING PETALS ---
+    function makePetal() {
+      const p = document.createElement('div');
+      p.classList.add('petal');
+      p.innerText = ['🌸','🌺','💮','🌼','🍀'][Math.floor(Math.random() * 5)];
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.fontSize = (Math.random() * 18 + 10) + 'px';
+      p.style.animationDuration = (Math.random() * 5 + 4) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 9000);
+    }
+
+    setInterval(makePetal, 400);
+
+  </script>
+
+</body>
+</html>
