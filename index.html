@@ -5,7 +5,6 @@
 
   <style>
 
-    /* ── BACKGROUND ── */
     body {
       margin: 0;
       min-height: 100vh;
@@ -19,7 +18,6 @@
       overflow-x: hidden;
     }
 
-    /* ── FLORAL CORNERS ── */
     body::before {
       content: '🌸🌺🌼🌸';
       position: fixed;
@@ -42,7 +40,6 @@
       pointer-events: none;
     }
 
-    /* ── FLORAL BORDER TOP ── */
     .floral-top {
       font-size: 24px;
       letter-spacing: 6px;
@@ -63,11 +60,12 @@
       margin-top: 40px;
     }
 
-    /* ── KITTEN TOP ── */
     .kitten-top {
-      font-size: 80px;
+      width: 220px;
       margin-top: 30px;
       display: block;
+      margin-left: auto;
+      margin-right: auto;
       animation: bounce 2s ease-in-out infinite;
     }
 
@@ -76,7 +74,6 @@
       50%       { transform: translateY(-15px); }
     }
 
-    /* ── TITLE ── */
     h1 {
       color: #c2185b;
       font-size: clamp(28px, 5vw, 52px);
@@ -100,7 +97,6 @@
       opacity: 0.85;
     }
 
-    /* ── IMAGES ROW ── */
     .images-row {
       display: flex;
       justify-content: center;
@@ -130,7 +126,6 @@
       50%       { transform: rotate(3deg)  scale(1.05); }
     }
 
-    /* ── BUTTONS ── */
     .buttons {
       margin: 30px 0;
     }
@@ -171,7 +166,6 @@
       transition: transform 0.2s;
     }
 
-    /* ── MESSAGE AFTER YES ── */
     #message {
       display: none;
       margin-top: 30px;
@@ -185,8 +179,9 @@
     }
 
     .kitten-yes {
-      font-size: 90px;
+      width: 200px;
       display: block;
+      margin: 0 auto 10px;
       animation: spin 0.6s ease, bounce 2s ease-in-out 0.6s infinite;
     }
 
@@ -208,69 +203,114 @@
       font-style: italic;
     }
 
-    /* ── FALLING PETALS ── */
     .petal {
       position: fixed;
       top: -30px;
-      font-size: 20px;
       pointer-events: none;
       animation: fall linear forwards;
       z-index: 0;
     }
 
     @keyframes fall {
-      0%   { top: -30px; opacity: 1;  }
+      0%   { top: -30px; opacity: 1; }
       100% { top: 110vh;  opacity: 0; }
     }
+
+    #musicBtn {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: linear-gradient(135deg, #ff80ab, #f48fb1);
+      border: none;
+      border-radius: 50%;
+      width: 54px;
+      height: 54px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255,100,150,0.5);
+      z-index: 1000;
+      transition: transform 0.2s;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    #musicBtn:hover { transform: scale(1.1); }
 
   </style>
 </head>
 <body>
 
-  <!-- FLORAL TOP BAR -->
+  <audio id="bgMusic" loop>
+    <source src="The 1975 - About You (Official).mp3" type="audio/mpeg">
+  </audio>
+  <button id="musicBtn" title="Toggle music">🎵</button>
+
   <div class="floral-top">🌸 🌺 🌼 💮 🌼 🌺 🌸</div>
 
-  <!-- KITTEN AT TOP -->
-  <span class="kitten-top">🐱</span>
+  <img src="cats.png" class="kitten-top" alt="cute cats"
+       onerror="this.outerHTML='<span style=\'font-size:100px;display:block;margin-top:30px\'>🐱</span>'"/>
 
-  <!-- TITLE -->
-  <h1>Will you be my Valentine? 💕</h1>
-  <p class="subtitle">~ you mean everything to me ~</p>
+  <h1>My cutuu baby will you be my Valentine? 🥰💕</h1>
+  <p class="subtitle">~ My paru sabeen!!! ~</p>
 
-  <!-- DECORATIVE IMAGE ROW -->
   <div class="images-row">
     <span>🌹</span>
-    <span>💝</span>
+    <span>😺</span>
     <span>🍫</span>
     <span>💌</span>
   </div>
 
-  <!-- BUTTONS -->
   <div class="buttons">
-    <button id="yesBtn">Yes of course! 💕</button>
-    <button id="noBtn">Maybe... 👀</button>
+    <button id="yesBtn">YES 😽❤️</button>
+    <button id="noBtn">NO 😿</button>
   </div>
 
-  <!-- MESSAGE SHOWN AFTER YES -->
   <div id="message">
-    <span class="kitten-yes">🐱</span>
-    <h2>Yayyyy!! 🎉💕</h2>
-    <p>You just made me the happiest person alive 🥹🌹</p>
+    <img src="cats.png" class="kitten-yes" alt="cute cats"
+         onerror="this.outerHTML='<span style=\'font-size:100px;display:block;margin:0 auto\'>🐱</span>'"/>
+    <h2>YAYYYY MUAH MUAH!! 😽😽😽💕</h2>
+    <p>You just made me the happiest person alive. ❤️❤️❤️🥰🥰🌹</p>
   </div>
 
-  <!-- FLORAL BOTTOM BAR -->
   <div class="floral-bottom">🌸 🌺 🌼 💮 🌼 🌺 🌸</div>
 
   <script>
 
-    // --- MAYBE BUTTON RUNS AWAY ---
+    // --- MUSIC ---
+    const music = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    let playing = false;
+
+    window.addEventListener('click', function startMusic() {
+      if (!playing) {
+        music.play().then(() => {
+          playing = true;
+          musicBtn.innerText = '🎵';
+        }).catch(() => {});
+      }
+      window.removeEventListener('click', startMusic);
+    }, { once: true });
+
+    musicBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (playing) {
+        music.pause();
+        playing = false;
+        musicBtn.innerText = '🔇';
+      } else {
+        music.play();
+        playing = true;
+        musicBtn.innerText = '🎵';
+      }
+    });
+
+    // --- NO BUTTON RUNS AWAY ---
     const noBtn = document.getElementById('noBtn');
     noBtn.addEventListener('mouseover', function() {
-      const x = Math.random() * (window.innerWidth  - 150);
+      const x = Math.random() * (window.innerWidth - 150);
       const y = Math.random() * (window.innerHeight - 80);
       noBtn.style.position = 'fixed';
       noBtn.style.left = x + 'px';
-      noBtn.style.top  = y + 'px';
+      noBtn.style.top = y + 'px';
       noBtn.style.zIndex = 999;
     });
 
@@ -301,9 +341,9 @@
       document.body.appendChild(c);
       let pos = -15, speed = Math.random() * 6 + 3, drift = Math.random() * 6 - 3, left = parseFloat(c.style.left);
       const fall = setInterval(() => {
-        pos  += speed;
+        pos += speed;
         left += drift;
-        c.style.top  = pos + 'px';
+        c.style.top = pos + 'px';
         c.style.left = left + 'vw';
         if (pos > window.innerHeight) { clearInterval(fall); c.remove(); }
       }, 16);
@@ -330,5 +370,4 @@
   </script>
 
 </body>
-
 </html>
